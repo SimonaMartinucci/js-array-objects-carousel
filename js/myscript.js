@@ -13,12 +13,24 @@ const arrayImg = images.map((picture) => {
     return picture.image;
 });
 
+// creo un array solo per i titoli delle immagini tramite ciclo
+const arrayTitle = images.map((title) => {
+    return title.title;
+});
+
+// creo un array solo per il testo delle immagini tramite ciclo
+const arrayText = images.map((text) => {
+    return text.text;
+});
+
 console.log(arrayImg);
+console.log(arrayTitle);
+console.log(arrayText);
 
 // richiamo container
 let container = document.querySelector(".container");
 
-// // estrapolo elementi array img
+// estrapolo elementi array img
 for(let i = 0; i < arrayImg.length; i++) {
     let itemImg = arrayImg[i];
 
@@ -32,13 +44,48 @@ for(let i = 0; i < arrayImg.length; i++) {
     container.innerHTML += itemContent;
 }
 
-// seleziono gli item della pagina
-const items = document.getElementsByClassName("item");
+// estrapolo elementi array title
+for(let i = 0; i < arrayTitle.length; i++) {
+    let itemTitle = arrayTitle[i];
+
+    // inserisco i div
+    let titleContent = `
+                <div class="title">
+                ${itemTitle}
+                </div>`;
+    
+    // inserisco il div nel container
+    container.innerHTML += titleContent;
+}
+
+// estrapolo elementi array text
+for(let i = 0; i < arrayText.length; i++) {
+    let itemText = arrayText[i];
+
+    // inserisco i div
+    let textContent = `
+                <div class="text">
+                ${itemText}
+                </div>`;
+    
+    // inserisco il div nel container
+    container.innerHTML += textContent;
+}
+
+// seleziono gli items della pagina
+const imgItems = document.getElementsByClassName("item");
+const titleItems = document.getElementsByClassName("title");
+const textItems = document.getElementsByClassName("text");
+
 
 // assegno classe active al primo elemento
-let activeItem = 0;
+let activeImg = 0;
+let activeTitle = 0;
+let activeText = 0;
 
-items[activeItem].classList.add("active");
+imgItems[activeImg].classList.add("active");
+titleItems[activeTitle].classList.add("active");
+textItems[activeText].classList.add("active");
 
 // seleziono il bottone next
 const next = document.querySelector(".next");
@@ -46,24 +93,61 @@ const next = document.querySelector(".next");
 // gestisco click su next
 next.addEventListener("click",
     function() {
-        // verifico di non essere alla fine delle img
-        if(activeItem < arrayImg.length - 1) {
-            // tolgo active su elemento attivo
-            items[activeItem].classList.remove("active");
+        // IMMAGINI
+        // verifico di non essere alla fine
+        if(activeImg < arrayImg.length - 1) {
+        // tolgo active su elemento attivo
+        imgItems[activeImg].classList.remove("active");
 
-            // aumento valore indice
-            activeItem++;
+        // aumento valore indice
+        activeImg++;
 
-            // aggiungo classe a nuovo elemento active
-            items[activeItem].classList.add("active");
+        // aggiungo classe a nuovo elemento active
+        imgItems[activeImg].classList.add("active");
 
         // aggiungo ciclo infinito next
-        }else if(activeItem === arrayImg.length - 1) {
-            items[activeItem].classList.remove("active");
-            activeItem = 0;
-            items[activeItem].classList.add("active");
+        }else if(activeImg === arrayImg.length - 1) {
+        imgItems[activeImg].classList.remove("active");
+        activeImg = 0;
+        imgItems[activeImg].classList.add("active");
         }
-    }
+
+        // TITOLO
+        if(activeTitle < arrayTitle.length - 1) {
+            // tolgo active su elemento attivo
+            titleItems[activeTitle].classList.remove("active");
+    
+            // aumento valore indice
+            activeTitle++;
+    
+            // aggiungo classe a nuovo elemento active
+            titleItems[activeTitle].classList.add("active");
+    
+            // aggiungo ciclo infinito next
+            }else if(activeTitle === arrayTitle.length - 1) {
+            titleItems[activeTitle].classList.remove("active");
+            activeTitle = 0;
+            titleItems[activeTitle].classList.add("active");
+            }
+
+            // TESTO
+            if(activeText < arrayText.length - 1) {
+                // tolgo active su elemento attivo
+                textItems[activeText].classList.remove("active");
+        
+                // aumento valore indice
+                activeText++;
+        
+                // aggiungo classe a nuovo elemento active
+                textItems[activeText].classList.add("active");
+        
+                // aggiungo ciclo infinito next
+                }else if(activeText === arrayText.length - 1) {
+                textItems[activeText].classList.remove("active");
+                activeText = 0;
+                textItems[activeText].classList.add("active");
+                }
+        }
 );
 
 // seleziono il bottone prev
@@ -72,22 +156,61 @@ const prev = document.querySelector(".prev");
 // gestisco click su prev
 prev.addEventListener("click",
     function() {
-        // aggiungo ciclo infinito next
-        if(activeItem === 0) {
-            items[activeItem].classList.remove("active");
-            activeItem = arrayImg.length - 1;
-            items[activeItem].classList.add("active");
+        // IMMAGINI
+        // aggiungo ciclo infinito prev
+        if(activeImg === 0) {
+            imgItems[activeImg].classList.remove("active");
+            activeImg = arrayImg.length - 1;
+            imgItems[activeImg].classList.add("active");
 
         // altrimenti, per tutte le altre immagini
-        }else if(activeItem <= arrayImg.length - 1) {
+        }else if(activeImg <= arrayImg.length - 1) {
             // rimuovo classe active
-            items[activeItem].classList.remove("active");
+            imgItems[activeImg].classList.remove("active");
 
             // diminuisco valore indice
-            activeItem--;
+            activeImg--;
 
             // aggiungo classe a nuovo elemento active
-            items[activeItem].classList.add("active");
+            imgItems[activeImg].classList.add("active");
+        }
+
+        // TITOLO
+        // aggiungo ciclo infinito next
+        if(activeTitle === 0) {
+            titleItems[activeTitle].classList.remove("active");
+            activeTitle = arrayTitle.length - 1;
+            titleItems[activeTitle].classList.add("active");
+
+        // altrimenti, per tutti gli altri
+        }else if(activeTitle <= arrayTitle.length - 1) {
+            // rimuovo classe active
+            titleItems[activeTitle].classList.remove("active");
+
+            // diminuisco valore indice
+            activeTitle--;
+
+            // aggiungo classe a nuovo elemento active
+            titleItems[activeTitle].classList.add("active");
+        }
+
+        // TESTO
+        // aggiungo ciclo infinito next
+        if(activeText === 0) {
+            textItems[activeText].classList.remove("active");
+            activeText = arrayText.length - 1;
+            textItems[activeText].classList.add("active");
+
+        // altrimenti, per tutti gli altri
+        }else if(activeText <= arrayText.length - 1) {
+            // rimuovo classe active
+            textItems[activeText].classList.remove("active");
+
+            // diminuisco valore indice
+            activeText--;
+
+            // aggiungo classe a nuovo elemento active
+            textItems[activeText].classList.add("active");
         }
     }
 );

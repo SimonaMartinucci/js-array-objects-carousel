@@ -62,7 +62,3 @@ function createClassElement(tagToAdd, classToAdd) {
 
     return box;
 }
-
-let prova = "Ciao";
-
-console.log(prova);
