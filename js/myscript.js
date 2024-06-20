@@ -8,75 +8,25 @@ const images = [
     } 
 ];
 
-// creo un array solo per i percorsi delle immagini tramite ciclo
-const arrayImg = images.map((picture) => {
-    return picture.image;
-});
-
-// creo un array solo per i titoli delle immagini tramite ciclo
-const arrayTitle = images.map((title) => {
-    return title.title;
-});
-
-// creo un array solo per il testo delle immagini tramite ciclo
-const arrayText = images.map((text) => {
-    return text.text;
-});
-
-console.log(arrayImg);
-console.log(arrayTitle);
-console.log(arrayText);
 
 // richiamo container
 let container = document.querySelector(".container");
 
-// estrapolo elementi array img
-for(let i = 0; i < arrayImg.length; i++) {
-    let itemImg = arrayImg[i];
+// faccio ciclo per creare inserire le immagini, il titolo e il testo
+images.forEach((element) => {
+    container.innerHTML += `
+    <div class="item">
+        <img src="${element.image}">
+    </div>
+    <div class="title">${element.title}</div>
+    <div class="text">${element.text}</div>`
+});
 
-    // inserisco i div
-    let itemContent = `
-                <div class="item">
-                    <img src="${itemImg}">
-                </div>`;
-    
-    // inserisco il div nel container
-    container.innerHTML += itemContent;
-}
-
-// estrapolo elementi array title
-for(let i = 0; i < arrayTitle.length; i++) {
-    let itemTitle = arrayTitle[i];
-
-    // inserisco i div
-    let titleContent = `
-                <div class="title">
-                ${itemTitle}
-                </div>`;
-    
-    // inserisco il div nel container
-    container.innerHTML += titleContent;
-}
-
-// estrapolo elementi array text
-for(let i = 0; i < arrayText.length; i++) {
-    let itemText = arrayText[i];
-
-    // inserisco i div
-    let textContent = `
-                <div class="text">
-                ${itemText}
-                </div>`;
-    
-    // inserisco il div nel container
-    container.innerHTML += textContent;
-}
 
 // seleziono gli items della pagina
 const imgItems = document.getElementsByClassName("item");
 const titleItems = document.getElementsByClassName("title");
 const textItems = document.getElementsByClassName("text");
-
 
 // assegno classe active al primo elemento
 let activeImg = 0;
@@ -92,10 +42,12 @@ const next = document.querySelector(".next");
 
 // gestisco click su next
 next.addEventListener("click",
+
+    
     function() {
         // IMMAGINI
         // verifico di non essere alla fine
-        if(activeImg < arrayImg.length - 1) {
+        if(activeImg < images.length - 1) {
         // tolgo active su elemento attivo
         imgItems[activeImg].classList.remove("active");
 
@@ -106,14 +58,14 @@ next.addEventListener("click",
         imgItems[activeImg].classList.add("active");
 
         // aggiungo ciclo infinito next
-        }else if(activeImg === arrayImg.length - 1) {
+        }else if(activeImg === images.length - 1) {
         imgItems[activeImg].classList.remove("active");
         activeImg = 0;
         imgItems[activeImg].classList.add("active");
         }
 
         // TITOLO
-        if(activeTitle < arrayTitle.length - 1) {
+        if(activeTitle < images.length - 1) {
             // tolgo active su elemento attivo
             titleItems[activeTitle].classList.remove("active");
     
@@ -124,14 +76,14 @@ next.addEventListener("click",
             titleItems[activeTitle].classList.add("active");
     
             // aggiungo ciclo infinito next
-            }else if(activeTitle === arrayTitle.length - 1) {
+            }else if(activeTitle === images.length - 1) {
             titleItems[activeTitle].classList.remove("active");
             activeTitle = 0;
             titleItems[activeTitle].classList.add("active");
             }
 
             // TESTO
-            if(activeText < arrayText.length - 1) {
+            if(activeText < images.length - 1) {
                 // tolgo active su elemento attivo
                 textItems[activeText].classList.remove("active");
         
@@ -142,7 +94,7 @@ next.addEventListener("click",
                 textItems[activeText].classList.add("active");
         
                 // aggiungo ciclo infinito next
-                }else if(activeText === arrayText.length - 1) {
+                }else if(activeText === images.length - 1) {
                 textItems[activeText].classList.remove("active");
                 activeText = 0;
                 textItems[activeText].classList.add("active");
@@ -160,11 +112,11 @@ prev.addEventListener("click",
         // aggiungo ciclo infinito prev
         if(activeImg === 0) {
             imgItems[activeImg].classList.remove("active");
-            activeImg = arrayImg.length - 1;
+            activeImg = images.length - 1;
             imgItems[activeImg].classList.add("active");
 
         // altrimenti, per tutte le altre immagini
-        }else if(activeImg <= arrayImg.length - 1) {
+        }else if(activeImg <= images.length - 1) {
             // rimuovo classe active
             imgItems[activeImg].classList.remove("active");
 
@@ -179,11 +131,11 @@ prev.addEventListener("click",
         // aggiungo ciclo infinito next
         if(activeTitle === 0) {
             titleItems[activeTitle].classList.remove("active");
-            activeTitle = arrayTitle.length - 1;
+            activeTitle = images.length - 1;
             titleItems[activeTitle].classList.add("active");
 
         // altrimenti, per tutti gli altri
-        }else if(activeTitle <= arrayTitle.length - 1) {
+        }else if(activeTitle <= images.length - 1) {
             // rimuovo classe active
             titleItems[activeTitle].classList.remove("active");
 
@@ -198,11 +150,11 @@ prev.addEventListener("click",
         // aggiungo ciclo infinito next
         if(activeText === 0) {
             textItems[activeText].classList.remove("active");
-            activeText = arrayText.length - 1;
+            activeText = images.length - 1;
             textItems[activeText].classList.add("active");
 
         // altrimenti, per tutti gli altri
-        }else if(activeText <= arrayText.length - 1) {
+        }else if(activeText <= images.length - 1) {
             // rimuovo classe active
             textItems[activeText].classList.remove("active");
 
@@ -214,3 +166,4 @@ prev.addEventListener("click",
         }
     }
 );
+
